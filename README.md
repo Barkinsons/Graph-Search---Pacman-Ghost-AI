@@ -1,5 +1,7 @@
 # Graph-Search---Pacman-Ghost-AI
-Graph Search Algorithms implemented into Pacman Ghost
+Graph Search Algorithms implemented into Pacman Ghost AI
+
+Note that this is not a full implementation of Pacman, but rather Pacman with core features such as a maze and player/ghost movement.
 
 ## How to Run
 
