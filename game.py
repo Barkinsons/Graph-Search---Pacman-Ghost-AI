@@ -20,7 +20,7 @@ class Game:
         self.screen = pg.display.set_mode((self.graph.width * S.tile_size, self.graph.height * S.tile_size))
 
         self.pacman = Pacman(self)
-        self.blinky = Ghost('redghost', Depth_First_Search, self)
+        self.blinky = Ghost('redghost', Best_First_Search, self)
         self.pinky = Ghost('pinkghost', Breadth_First_Search, self)
 
     def play(self):
