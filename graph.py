@@ -11,6 +11,9 @@ class Node:
     def add_neighbor(self, node):
         self.neighbors.append(node)
 
+    def __lt__(self, other):
+        return False
+
 class Graph:
 
     def __init__(self, game):
