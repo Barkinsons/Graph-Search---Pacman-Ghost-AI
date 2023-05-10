@@ -17,12 +17,12 @@ python3 game.py
 
 **Movement-** 
 
-Move left - `left_arrow` 
-Move right - `right_arrow`
-Move down - `down_arrow`
-Move up - `up_arrow`
+left - `left_arrow`  
+right - `right_arrow`  
+up - `up_arrow`  
+down - `down_arrow`  
 
 **Other -** 
 
-To pause the game temporarily - HOLD `space` 
+To pause the game temporarily HOLD `space`
 
