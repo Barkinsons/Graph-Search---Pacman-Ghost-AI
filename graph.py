@@ -2,6 +2,7 @@ import pygame as pg
 
 from settings import Settings as S
 
+
 class Node:
     def __init__(self, x, y):
         self.x, self.y = x, y
@@ -26,8 +27,6 @@ class Node:
     def __hash__(self):
         return hash((self.x, self.y))
 
-    def __lt__(self, other):
-        return False
 
 class Graph:
 
@@ -55,16 +54,16 @@ class Graph:
                 
                 # Left neighbor
                 if f'{x-1}-{y}' in self.graph:
-                    self.graph[f'{x}-{y}'].add_neighbor(self.graph[f'{x-1}-{y}']) 
+                    self.graph[f'{x}-{y}'].add_neighbor((self.graph[f'{x-1}-{y}'], 'left')) 
                 # Top neighbor
                 if f'{x}-{y-1}' in self.graph:
-                    self.graph[f'{x}-{y}'].add_neighbor(self.graph[f'{x}-{y-1}'])
+                    self.graph[f'{x}-{y}'].add_neighbor((self.graph[f'{x}-{y-1}'], 'up'))
                 # Right neighbor
                 if f'{x+1}-{y}' in self.graph:
-                    self.graph[f'{x}-{y}'].add_neighbor(self.graph[f'{x+1}-{y}'])
+                    self.graph[f'{x}-{y}'].add_neighbor((self.graph[f'{x+1}-{y}'], 'right'))
                 # Bottom neighbor
                 if f'{x}-{y+1}' in self.graph:
-                    self.graph[f'{x}-{y}'].add_neighbor(self.graph[f'{x}-{y+1}'])
+                    self.graph[f'{x}-{y}'].add_neighbor((self.graph[f'{x}-{y+1}'], 'down'))
 
 
     def update(self):
