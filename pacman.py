@@ -23,7 +23,7 @@ class Pacman:
 
         # Position Attributes
         self.rect = Pacman.images_r[0].get_rect()
-        self.rect.center = self.get_pos(1, 1)
+        self.rect.center = self.get_pos(13, 23)
 
 
         # Movement Attributes
