@@ -7,9 +7,24 @@ class Node:
         self.x, self.y = x, y
         self.rect = pg.Rect(x * S.tile_size, y * S.tile_size, S.tile_size, S.tile_size)
         self.neighbors = []
+        
+        self.g_score = float('inf')
+        self.h_score = 0
 
     def add_neighbor(self, node):
         self.neighbors.append(node)
+        
+    def __lt__(self, other):
+        # Compare nodes based on their f-scores (g_score + h_score)
+        return (self.g_score + self.h_score) < (other.g_score + other.h_score)
+
+    def __eq__(self, other):
+        if isinstance(other, Node):
+            return self.x == other.x and self.y == other.y
+        return False
+    
+    def __hash__(self):
+        return hash((self.x, self.y))
 
     def __lt__(self, other):
         return False
