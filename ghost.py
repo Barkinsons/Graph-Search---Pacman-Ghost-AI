@@ -1,21 +1,25 @@
 import pygame as pg
 
+from time import time
 from animation import Animation
 from settings import Settings as S
 
 class Ghost:
 
 
-    def __init__(self, type, algo, game):
+    def __init__(self, type, color, pos, line_offset, algo, game):
 
         self.game = game
         self.screen = game.screen
         self.pacman = game.pacman
+        self.color = color
+        self.offset = line_offset
 
         # Graph Finding Attributes
         self.graph = game.graph.graph
         self.algo = algo
-        self.path = None
+        self.cur_path = None
+        self.index = 0
 
         images = [[pg.transform.scale(pg.image.load(f'images/{type}{i}{j}.png'), (S.tile_size*2, S.tile_size*2)) for j in range(2)] for i in range(4)]
 
@@ -27,7 +31,7 @@ class Ghost:
 
         # Position Attributes
         self.rect = images[0][0].get_rect()
-        self.rect.center = self.get_pos(21, 17)
+        self.rect.center = self.get_pos(*pos)
 
         # Movement Attributes
         self.speed = 80 # pixels per second
@@ -64,13 +68,28 @@ class Ghost:
             x, y = self.game.pacman.get_x_y()
             target_node = self.graph[f'{x}-{y}']
 
-            self.path = self.algo.get_path(cur_node, target_node)
             self.start = self.rect.center
+            path = self.algo.get_path(cur_node, target_node)
 
-            if len(self.path) == 1:
+            if len(path) == 1:
                 self.target = self.start
             else:
-                self.target = self.path[1].rect.center
+                next_dir = path[1][1]
+                if (self.cur_direction, next_dir) not in [('left', 'right'), ('right', 'left'), ('up', 'down'), ('down', 'up')]:
+                    self.cur_path = path
+                    self.index = 1
+                else:
+                    self.index += 1
+            try:
+                self.target = self.cur_path[self.index][0].rect.center
+                self.cur_direction = self.cur_path[self.index][1]
+            except IndexError:
+                self.cur_path = path
+                self.index = 1 if len(path) != 1 else 0
+
+                self.target = self.cur_path[self.index][0].rect.center
+                self.cur_direction = self.cur_path[self.index][1]
+            
             self.secs = self.get_distance(self.start, self.target) / self.speed
             self.alpha = 0
             self.moving = True 
@@ -88,8 +107,8 @@ class Ghost:
 
     def draw(self):
 
-        for i in range(0, len(self.path)-1):
-            pg.draw.line(self.screen, (0, 255, 0), self.path[i].rect.center, self.path[i+1].rect.center)
+        for i in range(self.index, len(self.cur_path)-1):
+            pg.draw.line(self.screen, self.color, self.cur_path[i][0].rect.move(self.offset, self.offset).center, self.cur_path[i+1][0].rect.move(self.offset, self.offset).center)
 
         match self.cur_direction:
             case 'left':
