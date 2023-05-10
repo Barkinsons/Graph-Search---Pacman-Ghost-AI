@@ -26,6 +26,9 @@ class Node:
     def __hash__(self):
         return hash((self.x, self.y))
 
+    def __lt__(self, other):
+        return False
+
 class Graph:
 
     def __init__(self, game):

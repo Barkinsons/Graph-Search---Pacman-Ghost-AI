@@ -45,6 +45,33 @@ class Breadth_First_Search(Graph_Search):
                     queue.append((neighbor, path + [front]))
 
         return []
+    
+class Best_First_Search(Graph_Search):
+    def get_path(start: Node, target: Node) -> list:
+        
+        closed = set()
+        open = PriorityQueue()
+        open.put((0, [start]))
+
+        while not open.empty():
+            _, path = open.get()
+            cur = path[-1]
+
+            if cur == target:
+                return path
+
+            if cur in closed:
+                continue
+
+            closed.add(cur)
+
+            for neighbor in cur.neighbors:
+                if neighbor not in closed:
+                    priority = abs(neighbor.x - target.x) + abs(neighbor.y - target.y) # Manhattan Distance
+                    open.put((priority, path + [neighbor]))
+
+        return []
+
 
 class Depth_Limited_Search(Graph_Search):
     
