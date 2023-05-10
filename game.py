@@ -18,12 +18,15 @@ class Game:
         self.clock = pg.time.Clock()
         self.graph = Graph(self)
         self.screen = pg.display.set_mode((self.graph.width * S.tile_size, self.graph.height * S.tile_size))
+        for l, r in self.graph.graph.items():
+            print(f'{l}: Node({r.x, r.y})', end=', ')
 
         self.pacman = Pacman(self)
-        self.blinky = Ghost('redghost', Best_First_Search(), self)
-        self.pinky = Ghost('pinkghost', Breadth_First_Search(), self)
-        self.inky = Ghost('redghost', Depth_Limited_Search(), self)
-        self.clyde = Ghost('redghost', A_Star_Search(), self)
+        self.blinky = Ghost('redghost'   , (255,   0,   0), ( 1,  1), -4, Depth_First_Search        , self)
+        self.pinky  = Ghost('pinkghost'  , (255, 184, 255), ( 1, 29), -2, Breadth_First_Search      , self)
+        self.inky   = Ghost('aquaghost'  , (  0, 255, 255), (26, 29),  0, Iterative_Deepening_Search, self)
+        self.clyde  = Ghost('orangeghost', (255, 184,  82), (26,  1),  2, Best_First_Search         , self)
+        self.stinky = Ghost('greenghost' , (  0, 255,   0), (26,  1),  4, A_Star_Search             , self)
 
     def play(self):
         '''Play the game'''
