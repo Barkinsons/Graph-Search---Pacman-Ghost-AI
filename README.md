@@ -15,14 +15,14 @@ python3 game.py
 
 ## Controls
 
-Movement-
+**Movement-** 
 
-LEFT - <LEFT_ARROW>
-RIGHT - <RIGHT_ARROW>
-UP - <UP_ARROW>
-DOWN - <DOWN_ARROW>
+Move left - `left_arrow` 
+Move right - `right_arrow`
+Move down - `down_arrow`
+Move up - `up_arrow`
 
-Other -
+**Other -** 
 
-PAUSE GAME - HOLD<space>
+To pause the game temporarily - HOLD `space` 
 
